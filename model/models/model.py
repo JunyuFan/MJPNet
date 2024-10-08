@@ -116,9 +116,9 @@ class CALayer(nn.Module):
 
 
 
-class PDU(nn.Module):
+class HM(nn.Module):
     def __init__(self, channel):
-        super(PDU, self).__init__()
+        super(HM, self).__init__()
         self.avg_pool = nn.AdaptiveAvgPool2d(1)
         self.ka = nn.Sequential(
             nn.Conv2d(channel, channel // 8, 1, padding=0, bias=True),
@@ -151,7 +151,7 @@ class Block(nn.Module):
         super(Block, self).__init__()
         self.conv = conv(dim, dim, kernel_size, bias=True)
         self.calayer = CALayer(dim)
-        self.pdu = PDU(dim)
+        self.pdu = HM(dim)
 
     def forward(self, x):
         x, bias = x

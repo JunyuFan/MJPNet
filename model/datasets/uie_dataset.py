@@ -9,9 +9,7 @@ from torchvision.transforms import Compose, ToTensor, Resize, Normalize, AugMix
 
 def transform():
     return Compose([
-        # Resize((512, 512)),
-        ToTensor(),
-        # Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+        ToTensor()
     ])
 
 def is_image_file(filename):
@@ -110,7 +108,6 @@ class DatasetFromFolder(data.Dataset):
 
         if self.data_augmentation:
             input, label, _ = augment(input, label)
-            # input = self.augmix(input)
 
         if self.transform:
             input = self.transform(input)
@@ -143,16 +140,6 @@ class DatasetFromFolderEval(data.Dataset):
 
         input = input.resize((self.image_size, self.image_size), resample=Image.BICUBIC)
         label = label.resize((self.image_size, self.image_size), resample=Image.BICUBIC)
-        # input = input.resize((320, 240), resample=Image.BICUBIC)
-        # label = label.resize((320, 240), resample=Image.BICUBIC)
-
-        # (ih, iw) = input.size
-        # dh = ih % 8
-        # dw = iw % 8
-        # new_h, new_w = ih - dh, iw - dw
-
-        # input = input.resize((new_h, new_w))
-        # label = label.resize((new_h, new_w))
 
         if self.transform:
             input = self.transform(input)
